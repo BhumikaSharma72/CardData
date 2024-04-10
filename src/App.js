@@ -1,7 +1,9 @@
 // import { BrowserRouter } from "react-router-dom";
 // import Ecomerce from "./Ecomerce";
 
-import CardData from "./CardData";
+import { BrowserRouter } from "react-router-dom";
+// import CardData from "./CardData";
+import Navbar from "./Navbar";
 //import CmpA from "./CmpA";
 
 // import { Navbar } from "react-bootstrap";
@@ -9,12 +11,13 @@ function App() {
 
   return (
     <div>
-      {/* <BrowserRouter>
-<Ecomerce></Ecomerce>
-<Navbar></Navbar>
-</BrowserRouter> */}
+     <BrowserRouter>
+     <Navbar></Navbar>
+     </BrowserRouter>
 {/* <CmpA></CmpA> */}
-<CardData></CardData>
+{/* <CardData></CardData> */}
+
+
 </div>)
 }
 

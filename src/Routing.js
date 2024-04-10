@@ -10,6 +10,8 @@ import PageNotFount from "./PageNotFount"
 
 import Nav from "./Nav"
 import Boot from "./Boot"
+import Item from "./Item"
+import Header from "./Header"
 
 
 
@@ -19,6 +21,7 @@ function Routing()
         <div>
             <BrowserRouter>
             {/* <Nav></Nav> */}
+            <Header></Header>
             <Boot></Boot>
             
                 <Routes>
@@ -27,6 +30,7 @@ function Routing()
                     <Route path="/about" element={<AboutPage></AboutPage>}></Route>
                     <Route path="/contact" element={<ContactPage></ContactPage>}></Route>
                     <Route path="*" element={<PageNotFount></PageNotFount>}></Route>
+                    <Route path="item" element={<Item></Item>}></Route>
 
                 </Routes>
             

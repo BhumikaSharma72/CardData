@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   MDBCard,
   MDBCardImage,
@@ -8,80 +9,92 @@ import {
   MDBCol,
   MDBBtn
 } from 'mdb-react-ui-kit';
-import  {useState,useEffect} from "react"
+import Footer from './Footer';
+
+import {useNavigate} from "react-router-dom"
+
 
 function Home()
 {
-  const [apidata,setApiData]=useState([])
-  const [status,setStatus]=useState(true)
-  const [pid,setId]=useState()
-function hello(id)
-{
-setStatus(false)
-setId(id)
-}
- useEffect(()=>{
-       fetch("https://fakestoreapi.com/products").then((result)=>{
-           result.json().then((data)=>{
-             setApiData(data)
-           })
-       })
- },[]) 
+  const [apidata, setApiData] =useState([])
+  const navigate = useNavigate()
 
+  useEffect (()=>
+{
+  getData()
+},[])
+
+
+
+function getId(pid)
+{
+  const data = { name : pid , add : "Indore"}
+
+  navigate("./item" , {state : data} )
+
+  console.log(pid)
+
+
+}
+
+
+
+
+
+
+
+  async function getData()
+  {
+   var result =  await fetch("https://fakestoreapi.com/products")
+
+    var data = await result.json()
+
+    setApiData(data)
+
+  }
   return(
     <div>
-       {
+      
 
-        status?
-        <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
+      <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
+
         {
-           apidata.map((item)=>
-           <MDBCol>
-       <MDBCard>
-         <center><MDBCardImage
-           src={item.image}
-           alt='...' 
-           position='top' style={{width:"100px", height:"100px"}}
-         /></center>
-         <MDBCardBody>
+
+          apidata.map ((item,i)=>
+
+          <MDBCol key = {i}>
+          <MDBCard>
+          <center>  <MDBCardImage
+              src= {item.image} style ={{width : "100px", height : "100px"}}
+              alt='...'  
+              position='top'
+            /></center>
+            <MDBCardBody>
+              <MDBCardTitle style = {{color : "red"}}>{item.title}</MDBCardTitle>
+              <MDBCardTitle style =  {{color : "green"}}>{item.price*80} Rs</MDBCardTitle>
+              <MDBCardTitle style =  {{color : "blue"}}>{item.rating.rate}</MDBCardTitle>
+              <MDBCardText>
+                This is a longer card with supporting text below as a natural lead-in to additional content.
+                This content is a little bit longer.
+              </MDBCardText>
+
+
+              <MDBBtn  onClick={()=>getId(item.id)}>View Details {item.id}</MDBBtn>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
         
-           <MDBCardTitle>{item.title}</MDBCardTitle>
-           <MDBCardText>{item.description.slice(0,200)}</MDBCardText>
-           <MDBCardText style={{color:"red"}}>Rate : {item.price*80} RS</MDBCardText>
-            <center>  <MDBBtn onClick={()=>hello(item.id)}>View Detail {item.id}</MDBBtn></center>
-         </MDBCardBody>
-       </MDBCard>
-     </MDBCol>
-           )
-        }   
-   </MDBRow>:
+        
+        )
+          
+        }
+   
+      
+    </MDBRow>
 
-<MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-{
- apidata.map((item)=>
- item.id==pid?
- <MDBCol>
-<MDBCard>
-<center><MDBCardImage
- src={item.image}
- alt='...' 
- position='top' style={{width:"100px", height:"100px"}}
-/></center>
-<MDBCardBody>
-
- <MDBCardTitle>{item.title}</MDBCardTitle>
- <MDBCardText>{item.description.slice(0,200)}</MDBCardText>
- <MDBCardText style={{color:"red"}}>Rate : {item.price*80} RS</MDBCardText>
- <center>  <MDBBtn >Buy Now</MDBBtn></center><br></br>
-  <center>  <MDBBtn onClick={()=>setStatus(true)}>Back</MDBBtn></center>
-</MDBCardBody>
-</MDBCard>
-</MDBCol>:null
- )
-}   
-</MDBRow>
-       }
+    <Footer></Footer>
     </div>
   )
 }
-export default Home
+
+export default Home
